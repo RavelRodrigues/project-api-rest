@@ -13,25 +13,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      sobrenome: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       email: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
-      idade: {
-        type: Sequelize.INTEGER,
+      password_hash: {
+        type: Sequelize.STRING,
         allowNull: false,
-      },
-      peso: {
-        type: Sequelize.FLOAT,
-        allowNull: false,
-      },
-      altura: {
-        type: Sequelize.FLOAT,
-        allowNull: false,
+
       },
       created_at: {
         type: Sequelize.DATE,

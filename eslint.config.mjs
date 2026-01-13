@@ -48,8 +48,8 @@ export default [
       indent: ['error', 2],
       'no-console': 'off',
       'import/first': 'off',
+      'no-param-reassign': 'off',
 
-      // --- Ajustes para silenciar os erros querecebeu ---
       // 1. Permite usar __dirname e __filename (que o Airbnb proíbe por padrão)
       'no-underscore-dangle': 'off',
 
