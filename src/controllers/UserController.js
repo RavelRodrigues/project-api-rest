@@ -1,11 +1,13 @@
 import User from '../models/User';
 
 class UserController {
+  // Create
   async create(req, res) {
     try {
       const novoUser = await User.create(req.body);
+      const { id, nome, email } = novoUser;
 
-      return res.json(novoUser);
+      return res.json({ id, nome, email });
     } catch (e) {
       console.log('ERRO REAL:', e);
       // 1. Verificamos se e.errors existe antes de usar o .map()
@@ -35,8 +37,10 @@ class UserController {
   // Show
   async show(req, res) {
     try {
-      const user = await User.findByPk({ attributes: ['id', 'nome', 'email'] });
-      return res.json(user);
+      const user = await User.findByPk(req.params.id);
+
+      const { id, nome, email } = user;
+      return res.json({ id, nome, email });
     } catch (e) {
       return res.json(null);
     }
@@ -45,14 +49,7 @@ class UserController {
   // Update
   async update(req, res) {
     try {
-      const { id } = req.params;
-      if (!req.params.id) {
-        return res.status(400).json({
-          errors: ['ID não foi enviado!'],
-        });
-      }
-
-      const user = await User.findByPk(req.params.id);
+      const user = await User.findByPk(req.userId);
       if (!user) {
         return res.status(400).json({
           errors: ['Usuário não existe!'],
@@ -60,7 +57,8 @@ class UserController {
       }
 
       const novosDados = await user.update(req.body);
-      return res.json(novosDados);
+      const { id, nome, email } = novosDados;
+      return res.json({ id, nome, email });
     } catch (e) {
       return res.status(400).json({
         errors: e.errors.map((err) => err.message),
@@ -71,14 +69,7 @@ class UserController {
   // Delete
   async delete(req, res) {
     try {
-      const { id } = req.params;
-      if (!req.params.id) {
-        return res.status(400).json({
-          errors: ['ID não foi enviado!'],
-        });
-      }
-
-      const user = await User.findByPk(req.params.id);
+      const user = await User.findByPk(req.userId);
       if (!user) {
         return res.status(400).json({
           errors: ['Usuário não existe!'],
@@ -86,7 +77,7 @@ class UserController {
       }
 
       await user.destroy(req.body);
-      return res.json(user);
+      return res.json(null);
     } catch (e) {
       return res.status(400).json({
         errors: e.errors.map((err) => err.message),
