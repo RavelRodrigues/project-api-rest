@@ -60,6 +60,8 @@ export default [
 
       // 3. Desativa a regra que exige que o código use 'this' em métodos de classe
       'class-methods-use-this': 'off',
+
+      calmelcase: 'off',
     },
   },
 ];
